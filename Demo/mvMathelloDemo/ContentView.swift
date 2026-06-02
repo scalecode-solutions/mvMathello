@@ -34,6 +34,11 @@ struct ContentView: View {
                     } label: {
                         modeLabel("Chains", "solo · snake the ×φ combo")
                     }
+                    NavigationLink {
+                        SpiralGameView(rows: 12)
+                    } label: {
+                        modeLabel("Spiral", "solo · climb the Fibonacci diagonals")
+                    }
                 }
                 .padding(.horizontal)
             }
