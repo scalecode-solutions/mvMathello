@@ -29,6 +29,11 @@ struct ContentView: View {
                     } label: {
                         modeLabel("Fractal", "solo · blanket the Sierpiński")
                     }
+                    NavigationLink {
+                        ChainsGameView(rows: 12)
+                    } label: {
+                        modeLabel("Chains", "solo · snake the ×φ combo")
+                    }
                 }
                 .padding(.horizontal)
             }

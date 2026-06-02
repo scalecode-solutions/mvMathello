@@ -87,7 +87,8 @@ struct BoardView: View {
         if let burst = vm.lastBurst {
             let span = cell * 5
             TimelineView(.animation) { tl in
-                BurstView(burst: burst, cell: cell, span: span, start: tl.date)
+                BurstView(burst: burst, cell: cell, span: span, start: tl.date,
+                          tint: theme.landHigh.color)
             }
             .id(burst.id)
             .allowsHitTesting(false)
