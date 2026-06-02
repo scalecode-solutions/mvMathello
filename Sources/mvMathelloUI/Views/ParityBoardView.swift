@@ -18,6 +18,7 @@ struct ParityBoardView: View {
             let legal = vm.ghostLegal
             let turnColor = theme.color(for: vm.session.current)
 
+            ZStack(alignment: .topLeading) {
             Canvas { ctx, _ in
                 for row in 0..<rows {
                     for col in 0...row {
@@ -44,6 +45,15 @@ struct ParityBoardView: View {
                 }
             }
             .frame(width: cell * CGFloat(rows), height: cell * CGFloat(rows))
+
+                if let burst = vm.lastBurst {
+                    TimelineView(.animation) { tl in
+                        BurstView(burst: burst, cell: cell, span: cell * 5, start: tl.date)
+                    }
+                    .id(burst.id)
+                    .allowsHitTesting(false)
+                }
+            }
             .frame(width: geo.size.width, height: geo.size.height, alignment: .topLeading)
             .contentShape(Rectangle())
             .gesture(

@@ -96,32 +96,3 @@ struct BoardView: View {
 }
 
 /// One placement burst, driven by the Metal `hailstoneBurst` shader over ~0.7s.
-private struct BurstView: View {
-    let burst: HailstormViewModel.Burst
-    let cell: CGFloat
-    let span: CGFloat
-    let start: Date
-
-    @State private var began = Date()
-
-    var body: some View {
-        let elapsed = start.timeIntervalSince(began)
-        let progress = min(1, elapsed / 0.7)
-        Rectangle()
-            .fill(Color.white.opacity(0.001))
-            .frame(width: span, height: span)
-            .colorEffect(
-                ShaderLibrary.bundle(.module).hailstoneBurst(
-                    .float2(span, span),
-                    .float(Float(progress)),
-                    .float(Float(burst.intensity)),
-                    .float(Float(burst.id % 17))
-                )
-            )
-            .blendMode(.screen)
-            .position(x: (CGFloat(burst.center.x) + 0.5) * cell,
-                      y: (CGFloat(burst.center.y) + 0.5) * cell)
-            .onAppear { began = Date() }
-            .opacity(progress < 1 ? 1 : 0)
-    }
-}
