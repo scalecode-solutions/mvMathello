@@ -24,7 +24,9 @@ half4 hailstoneBurst(float2 position, half4 color, float2 size, float progress, 
     float sparkleR = 0.55 + 0.3 * sin((floor(theta * 6.0) + seed * 13.0) * 12.9898);
     float sparkle = exp(-26.0 * pow(r - progress * sparkleR, 2.0));
 
-    half3 hot = half3(1.0, 0.5, 0.78);
+    // Ray color comes from the incoming fill color, so callers tint the burst
+    // (e.g. the current player's color in Parity); sparkles stay gold.
+    half3 hot = color.rgb;
     half3 gold = half3(1.0, 0.86, 0.4);
 
     half rays = half(wave * ring * spokes);

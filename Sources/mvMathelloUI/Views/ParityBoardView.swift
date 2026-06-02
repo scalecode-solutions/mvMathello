@@ -48,7 +48,9 @@ struct ParityBoardView: View {
 
                 if let burst = vm.lastBurst {
                     TimelineView(.animation) { tl in
-                        BurstView(burst: burst, cell: cell, span: cell * 5, start: tl.date)
+                        // Tint with the player who just placed (turn already passed).
+                        BurstView(burst: burst, cell: cell, span: cell * 5, start: tl.date,
+                                  tint: theme.color(for: vm.session.current.other))
                     }
                     .id(burst.id)
                     .allowsHitTesting(false)

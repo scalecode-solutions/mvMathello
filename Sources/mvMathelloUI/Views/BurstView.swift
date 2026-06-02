@@ -21,13 +21,15 @@ struct BurstView: View {
     let cell: CGFloat
     let span: CGFloat
     let start: Date
+    /// Ray color — the shader uses the fill color, so callers tint the burst.
+    var tint: Color = .white
 
     @State private var began = Date()
 
     var body: some View {
         let progress = min(1, start.timeIntervalSince(began) / 0.7)
         Rectangle()
-            .fill(Color.white.opacity(0.001))
+            .fill(tint)
             .frame(width: span, height: span)
             .colorEffect(
                 ShaderLibrary.bundle(.module).hailstoneBurst(
