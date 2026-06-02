@@ -24,6 +24,11 @@ struct ContentView: View {
                     } label: {
                         modeLabel("Parity", "2-player · claim the territory")
                     }
+                    NavigationLink {
+                        FractalGameView(rows: 12)
+                    } label: {
+                        modeLabel("Fractal", "solo · blanket the Sierpiński")
+                    }
                 }
                 .padding(.horizontal)
             }
