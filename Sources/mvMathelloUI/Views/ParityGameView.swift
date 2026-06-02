@@ -43,7 +43,26 @@ public struct ParityGameView: View {
             Text("\(vm.session.current.label)'s turn")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(theme.color(for: vm.session.current))
+            territoryBar
         }
+    }
+
+    /// Live P1 / P2 / unclaimed split of the board's land.
+    private var territoryBar: some View {
+        let total = max(1, vm.session.board.landCount)
+        let s1 = vm.session.score(.one)
+        let s2 = vm.session.score(.two)
+        return GeometryReader { geo in
+            HStack(spacing: 0) {
+                Rectangle().fill(theme.playerOne)
+                    .frame(width: geo.size.width * CGFloat(s1) / CGFloat(total))
+                Rectangle().fill(theme.playerTwo)
+                    .frame(width: geo.size.width * CGFloat(s2) / CGFloat(total))
+                Rectangle().fill(theme.bodyColor.opacity(0.15))
+            }
+        }
+        .frame(height: 6)
+        .clipShape(Capsule())
     }
 
     private func scoreChip(_ player: Player) -> some View {

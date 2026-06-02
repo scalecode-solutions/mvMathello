@@ -28,6 +28,7 @@ public struct HailstormGameView: View {
             statusBar
             BoardView(vm: vm)
                 .padding(.vertical, 4)
+            dropReadout
             legend
             controls
         }
@@ -64,6 +65,18 @@ public struct HailstormGameView: View {
     private var timeString: String {
         let m = vm.secondsRemaining / 60, s = vm.secondsRemaining % 60
         return String(format: "%d:%02d", m, s)
+    }
+
+    // MARK: - Drop readout
+
+    /// Shows what the current ghost placement would bank — brighter when juicy.
+    private var dropReadout: some View {
+        let score = vm.ghostScore ?? 0
+        let legal = vm.ghostLegal
+        return Text(legal ? "this drop  +\(score)" : "off the board")
+            .font(.subheadline.weight(.bold).monospacedDigit())
+            .foregroundStyle(legal ? theme.landColor(heat: min(1, Double(score) / 60.0)) : theme.bodyColor.opacity(0.6))
+            .frame(height: 18)
     }
 
     // MARK: - Legend
