@@ -9,19 +9,12 @@ import mvMathelloKit
 public final class HailstormViewModel {
     public enum Status: Sendable { case ready, playing, over }
 
-    /// A placement event for the burst shader.
-    public struct Burst: Equatable, Sendable {
-        public var center: Coord
-        public var intensity: Double
-        public var id: Int
-    }
-
     public private(set) var session: HailstormSession
     public var ghostOrigin: Coord
     public private(set) var orientationIndex = 0
     public private(set) var status: Status = .ready
     public private(set) var secondsRemaining: Int
-    public private(set) var lastBurst: Burst?
+    public private(set) var lastBurst: BurstEvent?
 
     public let duration: Int
     /// Max land stopping-time on this board — normalizes the heat scale.
@@ -120,9 +113,9 @@ public final class HailstormViewModel {
             return
         }
         burstCounter += 1
-        lastBurst = Burst(center: center(of: cells),
-                          intensity: min(1.0, Double(score) / 200.0),
-                          id: burstCounter)
+        lastBurst = BurstEvent(center: center(of: cells),
+                               intensity: min(1.0, Double(score) / 200.0),
+                               id: burstCounter)
         Haptics.play(score >= 80 ? .bigScore : .place)
         orientationIndex = 0
     }
